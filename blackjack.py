@@ -12,23 +12,24 @@ for i in range(len(suits)):
 
 def dealer_moves(dealer_hand, player_hand, hit_card):
     print("Dealer Shows his Down Card")
-    if dealer_hand == 21 and player_hand == 21:
-        print("You Push.")
-    elif dealer_hand == player_hand:
-        print("You Push.")
-    elif dealer_hand == 21 and player_hand < 21:
-        print("Sorry, Dealer Wins.")
-    elif 21 > dealer_hand >= 17 and dealer_hand > player_hand:
-        print("Sorry, Dealer Wins.")
-    elif 21 > player_hand >= 17 and 21 > dealer_hand >= 17 and player_hand > dealer_hand:
-        print("You Win.")
-        time.sleep(1)
-    elif player_hand.isdigit() and dealer_hand > 17:
-        print("Dealer Hits")
-        time.sleep(1)
-
-        print(hit_card)
-        if dealer
+    while True:
+        if dealer_hand == 21 and player_hand == 21:
+            print("You Push.")
+        elif 17 <= dealer_hand < 21 and 17 <= player_hand < 21 and player_hand == dealer_hand:
+            print("You Push.")
+        elif dealer_hand == 21 and player_hand < 21:
+            print("Sorry, Dealer Wins.")
+        elif 21 > dealer_hand >= 17 and dealer_hand > player_hand:
+            print("Sorry, Dealer Wins.")
+        elif 21 > player_hand >= 17 and 21 > dealer_hand >= 17 and player_hand > dealer_hand:
+            print("You Win.")
+            time.sleep(1)
+        elif player_hand.isdigit() and dealer_hand > 17:
+            print("Dealer Hits")
+            time.sleep(1)
+            print(hit_card)
+            if dealer_hand >= 16:
+                print(hit_card)
 
 
 
