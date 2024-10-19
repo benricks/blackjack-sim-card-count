@@ -8,12 +8,24 @@ deck_of_cards = []
 for i in range(len(suits)):
     for j in range(len(cards)):
         deck_of_cards.append(f"{cards[j]} of {suits[i]}")
-def dealer_moves(dealer_hand, player_hand):
+
+
+def dealer_moves(dealer_hand, player_hand, hit_card):
     print("Dealer Shows his Down Card")
     if dealer_hand == 21 and player_hand == 21:
         print("You Push.")
     elif dealer_hand == 21 and player_hand < 21:
         print("Sorry, Dealer Wins.")
+    elif 21 > dealer_hand >= 17 and dealer_hand > player_hand:
+        print("Sorry, Dealer Wins.")
+    elif 21 > player_hand >= 17 and 21 > dealer_hand >= 17 and player_hand>dealer_hand:
+        print("You Win.")
+        time.sleep(1)
+        print(hit_card)
+        if dealer
+
+
+
 def hit_me(players_hand_value, players_hand, hit_card_value):
     if players_hand_value < 21:
         boom_or_doom = input('Dealer looks at you and signals towards your hand: \n Would you like to Hit or Stand? (h/s):  ').lower()
@@ -23,6 +35,7 @@ def hit_me(players_hand_value, players_hand, hit_card_value):
             print(f"You Have: {players_hand_value}")
         elif boom_or_doom == 's':
             print("You stand. Good Luck.")
+
 
 
 def card_value(card):
