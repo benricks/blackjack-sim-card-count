@@ -8,6 +8,22 @@ deck_of_cards = []
 for i in range(len(suits)):
     for j in range(len(cards)):
         deck_of_cards.append(f"{cards[j]} of {suits[i]}")
+def dealer_moves(dealer_hand, player_hand):
+    print("Dealer Shows his Down Card")
+    if dealer_hand == 21 and player_hand == 21:
+        print("You Push.")
+    elif dealer_hand == 21 and player_hand < 21:
+        print("Sorry, Dealer Wins.")
+def hit_me(players_hand_value, players_hand, hit_card_value):
+    if players_hand_value < 21:
+        boom_or_doom = input('Dealer looks at you and signals towards your hand: \n Would you like to Hit or Stand? (h/s):  ').lower()
+        if boom_or_doom == 'h':
+            print(f"{players_hand}")
+            players_hand_value += hit_card_value
+            print(f"You Have: {players_hand_value}")
+        elif boom_or_doom == 's':
+            print("You stand. Good Luck.")
+
 
 def card_value(card):
     if card.startswith('Ace'):
@@ -38,7 +54,9 @@ if dealer_1st_question == 'y'.lower():
     second_card = random.choice(deck_of_cards)
     second_card_value = card_value(second_card)
     dealer_first_card = random.choice(deck_of_cards)
+    dealer_first_card_value = card_value(dealer_first_card)
     dealer_second_card = random.choice(deck_of_cards)
+    dealer_second_card_value = card_value(dealer_second_card)
     hit_1 = random.choice(deck_of_cards)
     hit_1_value = card_value(hit_1)
     hit_2 = random.choice(deck_of_cards)
@@ -98,6 +116,8 @@ if dealer_1st_question == 'y'.lower():
         if boom_or_doom == 'h':
             print(hit_1)
             player_hand_value += hit_1_value
+            print(f"You have {player_hand_value}")
+        elif boom_or_doom == 's':
             print(f"You have {player_hand_value}")
             if player_hand_value > 21:
                 h2 = input("Would you like to Hit or Stand? (h/s):  ").lower()
