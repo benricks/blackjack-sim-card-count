@@ -31,7 +31,7 @@ def card_value(card):
     elif card.startswith('10') or card.startswith('Jack') or card.startswith('Queen') or card.startswith('King'):
         return 10
 
-dealer_1st_question = input('All bets in? (y/n)')
+dealer_1st_question = input('All bets in? (y/n):  ')
 if dealer_1st_question == 'y'.lower():
     first_card = random.choice(deck_of_cards)
     first_card_value = card_value(first_card)
@@ -39,6 +39,28 @@ if dealer_1st_question == 'y'.lower():
     second_card_value = card_value(second_card)
     dealer_first_card = random.choice(deck_of_cards)
     dealer_second_card = random.choice(deck_of_cards)
+    hit_1 = random.choice(deck_of_cards)
+    hit_1_value = card_value(hit_1)
+    hit_2 = random.choice(deck_of_cards)
+    hit_2_value = card_value(hit_2)
+    hit_3 = random.choice(deck_of_cards)
+    hit_3_value = card_value(hit_3)
+    hit_4 = random.choice(deck_of_cards)
+    hit_4_value = card_value(hit_4)
+    hit_5 = random.choice(deck_of_cards)
+    hit_5_value = card_value(hit_5)
+    hit_6 = random.choice(deck_of_cards)
+    hit_6_value = card_value(hit_6)
+    hit_7 = random.choice(deck_of_cards)
+    hit_7_value = card_value(hit_7)
+    hit_8 = random.choice(deck_of_cards)
+    hit_8_value = card_value(hit_8)
+    hit_9 = random.choice(deck_of_cards)
+    hit_9_value = card_value(hit_9)
+    hit_10 = random.choice(deck_of_cards)
+    hit_10_value = card_value(hit_10)
+    hit_11 = random.choice(deck_of_cards)
+    hit_11_value = card_value(hit_11)
     insurance_denial_expression = ["You Shake Your Head", 'You say, "Nope"', "You wave your hand over the table: declining" ]
     time.sleep(1)
     print('Dealing...')
