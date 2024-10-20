@@ -37,7 +37,7 @@ def dealer_moves(dealer_hand, player_hand, hit_card):
 
 
 
-def hit_me(players_hand_value, players_hand, hit_card, hit_card_value):
+def hit_me(players_hand_value, hit_card, hit_card_value):
     while True:
         if players_hand_value < 21:
             boom_or_doom = input('Dealer looks at you and signals towards your hand: \nWould you like to Hit or Stand? (h/s):  ').lower()
@@ -103,6 +103,16 @@ if dealer_1st_question == 'y'.lower():
     time.sleep(1)
     print('\nDealing Dealer Down Card\n')
     time.sleep(1)
+
+
+    player_card_value = first_card_value + second_card_value
+    players_hand = f"{first_card_value} and {second_card}"
+    hit_card = random_card_from_deck()
+    value_of_hit_card = card_value(hit_card)
+
+    dealers_hand = f"{dealer_first_card} and {dealer_second_card}"
+    dealer_card_value = dealer_first_card_value + dealer_second_card_value
+
     if dealer_second_card.startswith('10') or dealer_second_card.startswith('Jack') or dealer_second_card.startswith('Queen') or dealer_second_card.startswith('King') or dealer_second_card.startswith('Ace'):
         print('Dealer waves hand over table and asks: "Insurance?"')
         print("You pretend to think about it: counter's only take insurance if the count is extremely high.")
@@ -114,86 +124,12 @@ if dealer_1st_question == 'y'.lower():
         second_card_value += 10
         if first_card_value + second_card_value < 21:
             print(f'\nPlayer Has: Soft {first_card_value + second_card_value}\n')
+            hit_me(player_card_value, )
         if first_card_value + second_card_value == 21:
             print(f'\nBlackJack -- You Win!\n')
 
     else:
         print(f'\nPlayer Has: {first_card_value + second_card_value}\n')
-        player_card_value = first_card_value + second_card_value
-        players_hand = f"{first_card_value} and {second_card}"
-        value_of_hit_card = card_value(random_card_from_deck())
-        hit_me(player_card_value, players_hand, random_card_from_deck(), value_of_hit_card)
-        dealers_hand = f"{dealer_first_card} and {dealer_second_card}"
-        dealer_card_value = dealer_first_card_value + dealer_second_card_value
+        hit_me(player_card_value, random_card_from_deck(), value_of_hit_card)
+
         dealer_moves(dealer_card_value, player_card_value, random_card_from_deck())
-
-        # if boom_or_doom == 'h':
-        #     print(hit_1)
-        #     player_hand_value += hit_1_value
-        #     print(f"You have {player_hand_value}")
-        # elif boom_or_doom == 's':
-        #     print(f"You have {player_hand_value}")
-        #     if player_hand_value > 21:
-        #         h2 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #         if h2 == 'h':
-        #             print(hit_2)
-        #             player_hand_value += hit_2_value
-        #             print(f"You have {player_hand_value}")
-        #             if player_hand_value > 21:
-        #                 h3 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                 if h3 == 'h':
-        #                     print(hit_3)
-        #                     player_hand_value += hit_3_value
-        #                     print(f"You have {player_hand_value}")
-        #                     if player_hand_value > 21:
-        #                         h4 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                         if h4 == 'h':
-        #                             print(hit_4)
-        #                             player_hand_value += hit_4_value
-        #                             print(f"You have {player_hand_value}")
-        #                             if player_hand_value > 21:
-        #                                 h5 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                 if h5 == 'h':
-        #                                     print(hit_5)
-        #                                     player_hand_value += hit_5_value
-        #                                     print(f"You have {player_hand_value}")
-        #                                     if player_hand_value > 21:
-        #                                         h6 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                         if h6 == 'h':
-        #                                             print(hit_6)
-        #                                             player_hand_value += hit_6_value
-        #                                             print(f"You have {player_hand_value}")
-        #                                             if player_hand_value > 21:
-        #                                                 h7 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                                 if h7 == 'h':
-        #                                                     print(hit_7)
-        #                                                     player_hand_value += hit_7_value
-        #                                                     print(f"You have {player_hand_value}")
-        #                                                     if player_hand_value > 21:
-        #                                                         h8 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                                         if h8 == 'h':
-        #                                                             print(hit_8)
-        #                                                             player_hand_value += hit_8_value
-        #                                                             print(f"You have {player_hand_value}")
-        #                                                             if player_hand_value > 21:
-        #                                                                 h9 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                                                 if h9 == 'h':
-        #                                                                     print(hit_9)
-        #                                                                     player_hand_value += hit_9_value
-        #                                                                     print(f"You have {player_hand_value}")
-        #                                                                     if player_hand_value > 21:
-        #                                                                         h10 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                                                         if h10 == 'h':
-        #                                                                             print(hit_10)
-        #                                                                             player_hand_value += hit_10_value
-        #                                                                             print(f"You have {player_hand_value}")
-        #                                                                             if player_hand_value > 21:
-        #                                                                                 h11 = input("Would you like to Hit or Stand? (h/s):  ").lower()
-        #                                                                                 if h11 == 'h':
-        #                                                                                     print(hit_11)
-        #                                                                                     player_hand_value += hit_11_value
-        #                                                                                     print(f"You have {player_hand_value}")
-        #
-
-
-
