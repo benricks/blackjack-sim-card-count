@@ -1,5 +1,8 @@
 import random
 import time
+import sys
+MAX_B4_BUST = 21
+BUST = False
 suits = ['Diamonds', 'Clubs', 'Hearts', 'Spades']
 cards = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
 
@@ -11,69 +14,65 @@ for i in range(len(suits)):
 
 
 def adjust_for_aces(hand_value, num_aces):
-    while hand_value > 21 and num_aces > 0:
+    while hand_value > MAX_B4_BUST and num_aces > 0:
         hand_value -= 10  # Treat an Ace as 1 instead of 11
         num_aces -= 1
     return hand_value
 
 
 def dealer_moves(dealer_hand, player_hand_value):
+    global MAX_B4_BUST
+    MAX_B4_BUST = 21  # Assuming this constant is defined
     print(f"Dealer Shows his Down Card: {dealer_second_card}")
     time.sleep(1)
     print(f"Dealer Hand: {dealer_hand}")
-    if dealer_hand == 21 and player_hand_value == 21:
-        print("Dealer reluctantly, knocks on the table in front of your bet. You Push.")
-    elif 'Ace' and 'Jack' in dealers_hand or 'Ace' and 'King' in dealers_hand or 'Ace' and 'Queen' in dealers_hand or 'Ace' and '10' in dealers_hand:
-        print("Dealer Wins. Blackjack.")
-    while True:
-        if 17 <= dealer_hand < 21 and 17 <= player_hand_value < 21 and player_hand_value == dealer_hand:
-            print("Dealer knocks on the table in front of your bet. You Push.")
-            break
-        elif dealer_hand == 21 and player_hand_value < 21:
-            print("Sorry, Dealer Wins.")
-            break
-        elif 21 > dealer_hand >= 17 and dealer_hand > player_hand_value:
-            print("Sorry, Dealer Wins.")
-            break
-        elif 21 > player_hand_value >= 17 and 21 > dealer_hand >= 17 and player_hand_value > dealer_hand:
-            print("You Win.")
-            time.sleep(1)
-            break
-        else:
-            print("Dealer Hits")
-            time.sleep(1)
-            random_card = random_card_from_deck()
-            print(random_card)
-            if random_card.startswith('Ace') and dealer_hand > 11:
-                ace = 11
-                dealer_hand += ace
-            dealer_hand += card_value(random_card)
-            print(f"Dealer Has: {dealer_hand}.")
-            time.sleep(1)
-            if dealer_hand < 16 and 16 < player_hand_value < 21 and player_hand_value > dealer_hand:
-                print("You Win.")
-                break
-            elif dealer_hand > 21:
-                print("Dealer Busts. You Win!")
-                break
+
+    while dealer_hand < 17:
+        random_card = random.choice(deck_of_cards)
+        print(f"Dealer draws: {random_card}")
+        dealer_hand += card_value(random_card)
+        print(f"Dealer Has: {dealer_hand}")
+        time.sleep(1)
+
+        # Check if dealer busts
+        if dealer_hand > MAX_B4_BUST:
+            print("Dealer Bust! Player Wins.")
+            sys.exit(0)
+
+    # Final comparison between dealer and player hands
+    if dealer_hand > player_hand_value:
+        print("Dealer Wins!")
+        sys.exit(0)
+    elif dealer_hand < player_hand_value:
+        print("Player Wins!")
+        sys.exit(0)
+    else:
+        print("It's a tie!")
+        sys.exit(0)
+
 
 
 def hit_me(players_hand_value):
+    global BUST
     while True:
-        if players_hand_value < 21:
+        if players_hand_value < MAX_B4_BUST:
             boom_or_doom = input('Dealer looks at you and signals towards your hand: \nWould you like to Hit or Stand? (h/s):  ').lower()
             if boom_or_doom == 'h':
                 random_card = random.choice(deck_of_cards)
                 print(f"{random_card}")
                 players_hand_value += card_value(random_card)
                 print(f"You Have: {players_hand_value}")
-                if players_hand_value > 21:
+                if players_hand_value > MAX_B4_BUST:
                     print("You Bust: Dealer Wins.")
+                    BUST = True
                     break
             elif boom_or_doom == 's':
                 print("You stand. Good Luck.")
                 break
-    return players_hand_value
+        else:
+            print("You Have a Blackjack! You Win.")
+            break
+    return players_hand_value, BUST
 
 
 def random_card_from_deck():
@@ -115,7 +114,7 @@ if dealer_1st_question == 'y'.lower():
     dealer_second_card_value = card_value(dealer_second_card)
     insurance_denial_expression = ["You Shake Your Head", 'You say, "Nope"', "You wave your hand over the table: declining" ]
     # time.sleep(1)
-    # print('Dealing...')
+    print('Dealing...')
     # time.sleep(2)
     print(f'\nPlayer First Card: {first_card}\n')
     # time.sleep(1)
@@ -129,7 +128,6 @@ if dealer_1st_question == 'y'.lower():
     # time.sleep(1)
     print('\nDealing Dealer Down Card\n')
     # time.sleep(1)
-
 
     player_card_value = first_card_value + second_card_value
     players_hand = f"{first_card_value} and {second_card}"
@@ -149,16 +147,31 @@ if dealer_1st_question == 'y'.lower():
     print(f'\nPlayer Hand: {first_card} and {second_card}')
     if first_card_value < 11 and second_card.startswith('Ace') or second_card_value < 11 and first_card.startswith('Ace'):
         second_card_value += 10
-        if first_card_value + second_card_value < 21:
+        if first_card_value + second_card_value < MAX_B4_BUST:
             print(f'\nPlayer Has: Soft {first_card_value + second_card_value}\n')
             print(f"Dealer Has: {dealer_first_card} showing.")
             hit_me(player_card_value)
-        if first_card_value + second_card_value == 21:
+        if first_card_value + second_card_value == MAX_B4_BUST:
             print(f'\nBlackJack -- You Win!\n')
 
     else:
         print(f'\nPlayer Has: {first_card_value + second_card_value}')
         print(f"Dealer Has: {dealer_first_card} showing.\n")
+        double_down = input("Would you like to double down? (y/n):  ")
+        if double_down == 'y'.lower():
+            double = random_card_from_deck()
+            double_value = player_card_value + card_value(double)
+            print("You double down.")
+            time.sleep(1)
+            print(double)
+            print(f"Player Now Has: {double_value}\n")
+            if double_value > MAX_B4_BUST:
+                print("You Bust. Dealer Wins.")
+                time.sleep(2)
+                sys.exit()
+            else:
+                print("Good Luck")
+                dealer_moves(dealer_card_value, player_card_value)
         hit_me(player_card_value)
 
         dealer_moves(dealer_card_value, player_card_value)
